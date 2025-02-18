@@ -1,0 +1,147 @@
+logmodel <- glm(perfect_rating_score~ host_response_rate + host_listings_count + price + 
+                room_type + bedrooms + beds + cancellation_policy + amenity_score +
+                cleaning_fee + host_verification_score + guests_included +
+                availability_30 + accommodates*bathrooms + extra_people +
+                maximum_nights + bed_type*price + availability_365 + minimum_nights
+                ,data = train_clean, family = "binomial")
+
+#preds <- predict(logmodel, newdata = test_clean, type = "response")
+
+va_xl <- data.frame(va_x)
+preds1 <- predict(logmodel, newdata = va_xl, type = "response")
+
+# Do the classifications and compute accuracy
+#classifications <- ifelse(preds > .5, "YES", "NO")
+
+write.table(classifications, "perfect_rating_score_group22.csv", row.names = FALSE)
+
+#CM on VA
+classifications1 <- ifelse(preds1 > .5, "YES", "NO")
+correct <- ifelse(classifications1 == va$perfect_rating_score, 1, 0)
+acc <- sum(correct)/length(correct)
+#paste("accuracy is:", round(acc, 3))
+
+
+#output your predictions
+#they must be in EXACTLY this format
+#a .csv file with the naming convention targetvariable_groupAAA.csv, where you replace targetvariable with your chosen target, and AAA with your group name
+#in exactly the same order as they are in the test_x file
+
+# For perfect_rating_score, each row should be a binary YES (is perfect) or NO (not perfect)
+# For high_booking_rate, each row should be a number representing the likelihood of high_booking_rate = YES
+
+#this code creates sample outputs in the correct format
+valid_classifications1 <- as.factor(classifications1)
+
+
+CM_1 <- confusionMatrix(data = valid_classifications1, #predictions
+                        reference = va$perfect_rating_score, #actuals
+                        positive="YES") #by default, will choose alphabetically first class
+CM_1
+
+CM_1$table
+
+#(Side note: be very careful - 
+# not all confusion matrices are printed with the same orientation!)
+#(Make sure to read the matrix labels )
+
+# Called a "confusion matrix" because it shows how one class is "confused" for the other(s)
+# Four different types of classifications in a 2-class confusion matrix:
+# 86 True Positives (were predicted to be positives, are actually positives)
+TP <- CM_1$table[2,2]
+
+# 629 True Negatives (were predicted to be negatives, are actually negatives)
+TN <- CM_1$table[1,1]
+
+# 44 False Positives (were predicted to be positives, are actually negatives)
+FP <- CM_1$table[2,1]
+
+# 221 False Negatives (were predicted to be negatives, are actually positives)
+FN <- CM_1$table[1,2]
+
+#the confusionMatrix function also gives us some other derived metrics
+CM_1$overall
+CM_1$overall["Accuracy"]
+as.numeric(CM_1$overall["Accuracy"])
+
+CM_1$byClass
+
+# We can generate lots of classification metrics based on the confusion matrix.
+# These are the most important ones:
+
+# TPR = True Positive Rate = Sensitivity = Recall
+# Of all of the (actual) positives, how many did the classifier identify?
+TPR <- TP/(TP+FN)
+as.numeric(CM_1$byClass["Sensitivity"])
+
+# TNR = True Negative Rate = Specificity
+# Of all the (actual) negatives, how many did the classifier identify?
+TNR <- TN/(TN+FP)
+as.numeric(CM_1$byClass["Specificity"])
+
+# FPR = False Positive Rate = 1-TNR
+# Of all of the negatives, how many were incorrectly classified as positives?
+FPR <- 1-TNR
+
+# FNR = False Negative Rate = 1-TPR
+# Of all of the positives, how many were incorrectly classified as negatives?
+FNR = 1-TPR
+
+
+
+
+valid_classifications <- as.factor(classifications)
+
+
+CM_1 <- confusionMatrix(data = valid_classifications, #predictions
+                        reference = test_clean$perfect_rating_score, #actuals
+                        positive="YES") #by default, will choose alphabetically first class
+CM_1
+
+CM_1$table
+
+#(Side note: be very careful - 
+# not all confusion matrices are printed with the same orientation!)
+#(Make sure to read the matrix labels )
+
+# Called a "confusion matrix" because it shows how one class is "confused" for the other(s)
+# Four different types of classifications in a 2-class confusion matrix:
+# 86 True Positives (were predicted to be positives, are actually positives)
+TP <- CM_1$table[2,2]
+
+# 629 True Negatives (were predicted to be negatives, are actually negatives)
+TN <- CM_1$table[1,1]
+
+# 44 False Positives (were predicted to be positives, are actually negatives)
+FP <- CM_1$table[2,1]
+
+# 221 False Negatives (were predicted to be negatives, are actually positives)
+FN <- CM_1$table[1,2]
+
+#the confusionMatrix function also gives us some other derived metrics
+CM_1$overall
+CM_1$overall["Accuracy"]
+as.numeric(CM_1$overall["Accuracy"])
+
+CM_1$byClass
+
+# We can generate lots of classification metrics based on the confusion matrix.
+# These are the most important ones:
+
+# TPR = True Positive Rate = Sensitivity = Recall
+# Of all of the (actual) positives, how many did the classifier identify?
+TPR <- TP/(TP+FN)
+as.numeric(CM_1$byClass["Sensitivity"])
+
+# TNR = True Negative Rate = Specificity
+# Of all the (actual) negatives, how many did the classifier identify?
+TNR <- TN/(TN+FP)
+as.numeric(CM_1$byClass["Specificity"])
+
+# FPR = False Positive Rate = 1-TNR
+# Of all of the negatives, how many were incorrectly classified as positives?
+FPR <- 1-TNR
+
+# FNR = False Negative Rate = 1-TPR
+# Of all of the positives, how many were incorrectly classified as negatives?
+FNR = 1-TPR
