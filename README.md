@@ -56,7 +56,9 @@ This project predicts whether an Airbnb listing will have a **high booking rate*
 
 4. Run Data Processing & Model Training
 - Execute `scripts/data_cleaning.R` to preprocess the dataset.
-- Run `scripts/model_training.R` to train and evaluate the model.
+- Run `scripts/feature_engineering.R` to perform feature engineering to prepare data for sentiment analysis
+- Run `scripts/model_training.R` to train the Lasso and Random Forest Models.
+- Run `scripts/model_evaluation` to evaluate the models.
 
 ---
 ## 📢 Future Improvements  
