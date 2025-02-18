@@ -12,12 +12,14 @@ This project predicts whether an Airbnb listing will have a **high booking rate*
 ---
 
 ## 📂 Repository Structure  
+```
 📁 airbnb-booking-prediction
 │── 📂 data/ # Sample datasets (public data only)
 │── 📂 scripts/ # R scripts for data cleaning, feature engineering & modeling
 │── 📂 notebooks/ # Exploratory data analysis & model evaluation
 │── 📄 README.md # Project documentation
 │── 📄 requirements.txt # List of required libraries
+```
 
 
 > **📢 Note:** Due to GitHub’s file size limitations, **large datasets and model files** are available in the **[GitHub Releases Section](https://github.com/Carter17401/Machine-Learning-Driven-Booking-Rate-Optimization-for-Airbnb-Listings/releases).**  
