@@ -1,0 +1,35 @@
+# Core Data Manipulation & Processing
+tidyverse
+dplyr
+stringr
+caret
+data.table
+
+# Data Visualization
+ggplot2
+corrplot
+
+# Text Processing & NLP
+tm
+text2vec
+quanteda
+SnowballC
+
+# Machine Learning Models
+glmnet
+ranger
+xgboost
+
+# Model Evaluation & Metrics
+caret
+ROCR
+
+# Utility Libraries
+Matrix
+
+# To install all libraries, run the R code below
+packages <- c("tidyverse", "dplyr", "stringr", "caret", "data.table",
+              "ggplot2", "corrplot", "tm", "text2vec", "quanteda", "SnowballC",
+              "glmnet", "ranger", "xgboost", "ROCR", "Matrix")
+
+install.packages(packages, dependencies = TRUE)
