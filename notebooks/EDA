@@ -1,0 +1,26 @@
+# Load necessary libraries
+library(tidyverse)
+library(ggplot2)
+library(corrplot)
+
+# Load the cleaned dataset
+summary(train_clean)
+str(train_clean)
+
+# Visualizing missing values
+missing_values <- colSums(is.na(train_clean))
+missing_values_df <- data.frame(Feature = names(missing_values), MissingCount = missing_values)
+ggplot(missing_values_df, aes(x = reorder(Feature, -MissingCount), y = MissingCount)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  coord_flip() +
+  labs(title = "Missing Values per Feature", x = "Feature", y = "Count")
+
+# Feature distributions
+ggplot(train_clean, aes(x = price)) +
+  geom_histogram(bins = 50, fill = "darkgreen", color = "black") +
+  labs(title = "Distribution of Listing Prices", x = "Price ($)", y = "Count")
+
+# Correlation heatmap
+numeric_features <- select_if(train_clean, is.numeric)
+corr_matrix <- cor(numeric_features, use = "complete.obs")
+corrplot(corr_matrix, method = "color", type = "lower", tl.col = "black", tl.srt = 45)
